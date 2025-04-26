@@ -1,37 +1,45 @@
-name: Flutter Web CI
+name: Deploy Flutter Web to GitHub Pages
 
-# 1) Esto le dice a GitHub que ejecute el workflow en cada push a main
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      # 2) Saca tu código
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 3) Instala Flutter
       - name: Setup Flutter
-        uses: actions/setup-flutter@v2
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: 'stable'
 
-      # 4) Obtiene dependencias
       - name: Install dependencies
         run: flutter pub get
 
-      # 5) Genera la versión web
-      - name: Build web
+      - name: Build Flutter Web
         run: flutter build web --release
 
-      # 6) Publica en GitHub Pages
-      - name: Deploy to Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/web
+          path: build/web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+
