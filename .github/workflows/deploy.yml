@@ -1,5 +1,6 @@
 name: Flutter Web CI
 
+# 1) El workflow se dispara al hacer push sobre la rama main
 on:
   push:
     branches:
@@ -7,26 +8,29 @@ on:
 
 jobs:
   build-and-deploy:
+    # 2) Se ejecuta en Ubuntu:
     runs-on: ubuntu-latest
-    steps:
-      # 1) Obtiene el código
-      - uses: actions/checkout@v3
 
-      # 2) Instala Flutter
+    steps:
+      # 3) Clona el repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 4) Configura Flutter (usa el action oficial de subosito)
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: 'stable'
 
-      # 3) Dependencias
+      # 5) Instala dependencias
       - name: Install dependencies
         run: flutter pub get
 
-      # 4) Compila la versión web
+      # 6) Construye la versión web
       - name: Build web
         run: flutter build web --release
 
-      # 5) Publica en gh-pages
+      # 7) Despliega a GitHub Pages
       - name: Deploy to Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
