@@ -45,5 +45,28 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+<!-- Permitir navegación web en WebView, incluso si usa HTTP -->
+<key>NSAppTransportSecurity</key>
+<dict>
+  <key>NSAllowsArbitraryLoads</key>
+  <true/>
+</dict>
+
+<!-- (Opcionales, según necesidades futuras) -->
+<key>NSCameraUsageDescription</key>
+<string>Necesitamos usar la cámara para tomar fotos.</string>
+
+<key>NSMicrophoneUsageDescription</key>
+<string>El micrófono es necesario para grabar audio.</string>
+
+<key>NSPhotoLibraryUsageDescription</key>
+<string>La app requiere acceso a la galería para subir imágenes.</string>
+
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>Se requiere tu ubicación para mejorar la experiencia de búsqueda.</string>
+
+
+
+
 </dict>
 </plist>
