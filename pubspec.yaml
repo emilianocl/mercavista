@@ -1,5 +1,5 @@
-name: mercavista
-description: "A new Flutter project."
+name: Mercavista
+description: "Busqueda de productos multi-marketplaces"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -95,3 +95,5 @@ flutter_icons:
   android: true
   ios: true      # si luego quieres ícono para iOS
   image_path: "assets/icon/app_icon.png"
+  adaptive_icon_background: "#002844"        # un color sólido #FFFFFFFF de fondo (puede ser blanco, azul, negro, lo que quieras)
+  adaptive_icon_foreground: "assets/icon/app_icon.png"
