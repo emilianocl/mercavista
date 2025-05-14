@@ -64,9 +64,5 @@
 
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>Se requiere tu ubicación para mejorar la experiencia de búsqueda.</string>
-
-
-
-
 </dict>
 </plist>
