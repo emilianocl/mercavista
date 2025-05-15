@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'product_database.dart';
 import 'webview_page.dart';  // <-- El nuevo widget que crearemos
+//import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 
 // ------------------------
 // ENUM GLOBAL
@@ -75,7 +76,7 @@ class LandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFEAEDF2),
-      body: SafeArea(
+      body: SafeArea(               
         child: Column(
           children: [
             _buildSearchBar(context),
@@ -90,42 +91,64 @@ class LandingPage extends StatelessWidget {
     );
   }
 
-Widget _buildSearchBar(BuildContext ctx) => Container(
-  color: const Color(0xFF002844),
-  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-  child: Container(
-    height: 50,
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(8),
+Widget _buildSearchBar(BuildContext ctx) {
+  final double topPadding = MediaQuery.of(ctx).padding.top;
+  return Container(
+    color: const Color(0xFF002744),
+    padding: EdgeInsets.only(
+      top: topPadding,
+      left: 16,
+      right: 16,
+      bottom: 8,
     ),
-    padding: const EdgeInsets.symmetric(horizontal: 12),
     child: Row(
       children: [
-        const Icon(Icons.search, color: Colors.grey, size: 28),
-        const SizedBox(width: 8),
+        // No hay flecha aquí
         Expanded(
-          child: TextField(
-            style: const TextStyle(
-              fontSize: 18,
-              color: Colors.black,
+          child: Container(
+            height: 44,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
             ),
-            onSubmitted: (txt) => Navigator.pushNamed(ctx, '/list', arguments: txt),
-            decoration: const InputDecoration(
-              hintText: 'Buscar producto',
-              hintStyle: TextStyle(fontSize: 18),
-              border: InputBorder.none,
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              children: [
+                const Icon(Icons.search, color: Colors.grey, size: 26),
+                const SizedBox(width: 4),
+                Expanded(
+                  child: TextField(
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                    ),
+                    onSubmitted: (txt) =>
+                        Navigator.pushNamed(ctx, '/list', arguments: txt),
+                    decoration: const InputDecoration(
+                      hintText: 'Buscar producto',
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(fontSize: 18),
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(vertical: 8),
+                    ),
+                  ),
+                ),
+                // Micrófono dentro de la barra
+                IconButton(
+                  icon: const Icon(Icons.mic, color: Colors.grey, size: 24),
+                  onPressed: () {},
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                ),
+              ],
             ),
           ),
         ),
-        IconButton(
-          icon: const Icon(Icons.mic, color: Colors.grey),
-          onPressed: () {},
-        ),
       ],
     ),
-  ),
-);
+  );
+}
+
 
   Widget _buildMiniCategoryRow(BuildContext context) {
     final miniPcImg = productDatabase
