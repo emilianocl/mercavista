@@ -90,43 +90,42 @@ class LandingPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchBar(BuildContext ctx) => Container(
-        color: const Color(0xFF002844),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(children: [
-          Expanded(
-            child: Container(
-              height: 60,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(8)),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(children: [
-                const Icon(Icons.search, color: Colors.grey,size: 36),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    style: const TextStyle(
-                      fontSize: 24,              // << aquí pones el tamaño que quieras
-                      color: Colors.black,       // opcional: color del texto
-                        ),
-                    onSubmitted: (txt) =>
-                        Navigator.pushNamed(ctx, '/list', arguments: txt),
-                    decoration: const InputDecoration(
-                        hintText: 'Buscar producto', hintStyle: TextStyle(fontSize: 24),border: InputBorder.none),
-                  ),
-                )
-              ]),
+Widget _buildSearchBar(BuildContext ctx) => Container(
+  color: const Color(0xFF002844),
+  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+  child: Container(
+    height: 50,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(8),
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 12),
+    child: Row(
+      children: [
+        const Icon(Icons.search, color: Colors.grey, size: 28),
+        const SizedBox(width: 8),
+        Expanded(
+          child: TextField(
+            style: const TextStyle(
+              fontSize: 18,
+              color: Colors.black,
+            ),
+            onSubmitted: (txt) => Navigator.pushNamed(ctx, '/list', arguments: txt),
+            decoration: const InputDecoration(
+              hintText: 'Buscar producto',
+              hintStyle: TextStyle(fontSize: 18),
+              border: InputBorder.none,
             ),
           ),
-          const SizedBox(width: 12),
-          Container(
-            decoration:
-                const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-            child:
-                IconButton(icon: const Icon(Icons.mic), color: Colors.grey, onPressed: () {}),
-          )
-        ]),
-      );
+        ),
+        IconButton(
+          icon: const Icon(Icons.mic, color: Colors.grey),
+          onPressed: () {},
+        ),
+      ],
+    ),
+  ),
+);
 
   Widget _buildMiniCategoryRow(BuildContext context) {
     final miniPcImg = productDatabase
@@ -321,66 +320,73 @@ class _HomePageState extends State<HomePage> {
 
   // Barra de búsqueda CON FLECHA
   Widget _buildSearchBar(BuildContext ctx) => Container(
-        color: const Color(0xFF002844),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+  color: const Color(0xFF002844),
+  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10), // menos alto
+  child: Row(children: [
+    IconButton(
+      icon: const Icon(Icons.arrow_back, color: Colors.white),
+      iconSize: 24, // un poco más pequeño para la barra compacta
+      onPressed: () => Navigator.pop(ctx),
+    ),
+    const SizedBox(width: 8),
+    Expanded(
+      child: Container(
+        height: 50, // más compacto
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0), // menos padding
         child: Row(children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            iconSize:36,
-            onPressed: () => Navigator.pop(ctx),
-          ),
+          const Icon(Icons.search, color: Colors.grey, size: 24), // tamaño acorde a barra más baja
           const SizedBox(width: 8),
           Expanded(
-            child: Container(
-              height: 60,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(8)),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(children: [
-                const Icon(Icons.search, color: Colors.grey, size:36),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    style: const TextStyle(
-                      fontSize: 24,              // << aquí pones el tamaño que quieras
-                      color: Colors.black,       // opcional: color del texto
-                      ),
-                    onSubmitted: (txt) => Navigator.pushReplacementNamed(
-                        ctx, '/list',
-                        arguments: txt),
-                    decoration: const InputDecoration(
-                        hintText: 'Buscar producto', border: InputBorder.none,hintStyle: TextStyle(fontSize: 24)),
-                  ),
-                )
-              ]),
+            child: TextField(
+              style: const TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+              ),
+              onSubmitted: (txt) => Navigator.pushReplacementNamed(
+                ctx, '/list',
+                arguments: txt,
+              ),
+              decoration: const InputDecoration(
+                hintText: 'Buscar producto',
+                border: InputBorder.none,
+                hintStyle: TextStyle(fontSize: 18),
+                contentPadding: EdgeInsets.symmetric(vertical: 0),
+              ),
             ),
           ),
-          const SizedBox(width: 12),
-          Container(
-            decoration:
-                const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-            child:
-                IconButton(icon: const Icon(Icons.mic), color: Colors.grey, onPressed: () {}),
-          )
+          // MICRÓFONO dentro de la barra:
+          IconButton(
+            icon: const Icon(Icons.mic, color: Colors.grey, size: 22),
+            onPressed: () {},
+            padding: EdgeInsets.zero,
+            constraints: BoxConstraints(), // bien pegado
+          ),
         ]),
-      );
+      ),
+    ),
+  ]),
+);
 
   Widget _buildAddressBar() => Container(
         color: const Color(0xFFF99E2B),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
         child: Row(children: [
           const Icon(Icons.location_on, color: Colors.black),
           const SizedBox(width: 8),
           Expanded(
             child: Text(_selectedAddress,
                 style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.arrow_drop_down),
             onSelected: (v) => setState(() => _selectedAddress = v),
             itemBuilder: (_) =>
-                _addresses.map((a) => PopupMenuItem(value: a, child: Text(a,style: const TextStyle(fontSize: 20)))).toList(),
+                _addresses.map((a) => PopupMenuItem(value: a, child: Text(a,style: const TextStyle(fontSize: 16)))).toList(),
           ),
         ]),
       );
@@ -440,7 +446,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(width: 8),
                 Text(winner['marketplace'],
                     style: const TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.bold)),
+                        fontSize: 20, fontWeight: FontWeight.bold)),
               ]),
               const SizedBox(height: 12),
               // Carrusel marketplaces
@@ -490,7 +496,7 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
                                         color:
                                             active ? Colors.white : Colors.black,
-                                        fontSize: 20)),
+                                        fontSize: 18)),
                               ),
                             ),
                           );
@@ -530,22 +536,22 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(sel['producto'] as String,
-                          style: const TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 14),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis),
                       const SizedBox(height: 8),
                       Text(
                         '${sel['prefijo_costo']}${NumberFormat("#,###", "es").format(sel['costo_producto'])}',
                         style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 6),
                       Row(children: [
-                        const Icon(Icons.star, color: Colors.amber, size: 16),
+                        const Icon(Icons.star, color: Colors.amber, size: 14),
                         const SizedBox(width: 4),
                         Text(
                             '${(sel['numero_estrellas'] as double).toStringAsFixed(1)} (${sel['numero_reviews']})',
-                            style: const TextStyle(fontSize: 14)),
+                            style: const TextStyle(fontSize: 12)),
                       ]),
                       const SizedBox(height: 6),
                       Text(
@@ -561,7 +567,7 @@ class _HomePageState extends State<HomePage> {
                         child: Text(
                           'Total: ${sel['prefijo_costo']}${NumberFormat("#,###", "es").format(sel['costo_total'])}',
                           style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(height: 6),
@@ -577,12 +583,12 @@ class _HomePageState extends State<HomePage> {
                             style:
                                 const TextStyle(fontSize: 12, color: Colors.black),
                             children: [
-                              const TextSpan(text: 'Envío ',style: TextStyle(fontSize: 16)),
+                              const TextSpan(text: 'Envío ',style: TextStyle(fontSize: 14)),
                               TextSpan(
                                   text: '$start - $end',
                                   style:
-                                      const TextStyle(fontWeight: FontWeight.bold,fontSize: 16)),
-                              TextSpan(text: ' a Chile',style: TextStyle(fontSize: 16)),
+                                      const TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
+                              TextSpan(text: ' a Chile',style: TextStyle(fontSize: 14)),
                             ],
                           ),
                         );
@@ -603,9 +609,9 @@ class _HomePageState extends State<HomePage> {
                             });
                           },
                           child: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 12),
+                            padding: EdgeInsets.symmetric(vertical: 8),
                             child: Text('Ir a comprar',
-                                style: TextStyle(color: Colors.white,fontSize: 24)),
+                                style: TextStyle(color: Colors.white,fontSize: 18)),
                           ),
                         ),
                       ),
@@ -636,7 +642,7 @@ class _ModeButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
         decoration: BoxDecoration(
           color: selected ? const Color(0xFFEAF9FF) : const Color(0xFFEAEDF2),
           borderRadius: BorderRadius.circular(20),
@@ -646,7 +652,7 @@ class _ModeButton extends StatelessWidget {
         ),
         child: Text(label,
             style:
-                const TextStyle(color: Color(0xFF002844), fontWeight: FontWeight.bold,fontSize: 20)),
+                const TextStyle(color: Color(0xFF002844), fontWeight: FontWeight.bold,fontSize: 16)),
       ),
     );
   }
