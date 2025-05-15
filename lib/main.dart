@@ -543,7 +543,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         '${sel['prefijo_costo']}${NumberFormat("#,###", "es").format(sel['costo_producto'])}',
                         style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 6),
                       Row(children: [
@@ -567,7 +567,7 @@ class _HomePageState extends State<HomePage> {
                         child: Text(
                           'Total: ${sel['prefijo_costo']}${NumberFormat("#,###", "es").format(sel['costo_total'])}',
                           style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(height: 6),
