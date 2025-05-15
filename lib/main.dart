@@ -387,14 +387,14 @@ class _HomePageState extends State<HomePage> {
                 text: 'Mostrando resultados para ',
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: 14,
                 ),
               ),
               TextSpan(
                 text: filter,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.underline,
                 ),
@@ -411,7 +411,7 @@ class _HomePageState extends State<HomePage> {
                 'Desde $country',
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 10,
+                  fontSize: 12,
                   fontStyle: FontStyle.italic,
                 ),
               ),
@@ -420,7 +420,7 @@ class _HomePageState extends State<HomePage> {
               '($resultCount productos)',
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 10,
+                fontSize: 12,
               ),
             ),
           ],
