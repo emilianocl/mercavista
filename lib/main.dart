@@ -302,7 +302,8 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             _buildSearchBar(context),
-            _buildAddressBar(),
+          //  _buildAddressBar(),
+          _buildInfoBar(context, widget.filter ?? "", filtered.length, "Chile"),
             _buildModeSelector(),
             Expanded(
               child: ListView.builder(
@@ -371,25 +372,64 @@ class _HomePageState extends State<HomePage> {
   ]),
 );
 
-  Widget _buildAddressBar() => Container(
-        color: const Color(0xFFF99E2B),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-        child: Row(children: [
-          const Icon(Icons.location_on, color: Colors.black),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(_selectedAddress,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+  Widget _buildInfoBar(BuildContext context, String filter, int resultCount, String country) {
+  return Container(
+    color: const Color(0xFF002744),
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Fila 1: Mostrando resultados para "xxx"
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'Mostrando resultados para ',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+              TextSpan(
+                text: filter,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ],
           ),
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.arrow_drop_down),
-            onSelected: (v) => setState(() => _selectedAddress = v),
-            itemBuilder: (_) =>
-                _addresses.map((a) => PopupMenuItem(value: a, child: Text(a,style: const TextStyle(fontSize: 16)))).toList(),
-          ),
-        ]),
-      );
+        ),
+        const SizedBox(height: 2),
+        // Fila 2: Desde País (izquierda) | (N productos) (derecha)
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                'Desde $country',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+            Text(
+              '($resultCount productos)',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 10,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget _buildModeSelector() => Padding(
         padding: const EdgeInsets.symmetric(vertical: 12),
