@@ -52,20 +52,41 @@ class AppBottomNavBar extends StatelessWidget {
   final int currentIndex;
   const AppBottomNavBar({Key? key, required this.currentIndex})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       currentIndex: currentIndex,
+      onTap: (index) {
+        if (index == 0) {
+          // Ir siempre al inicio/LandingPage
+          Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+        }
+        // Aquí podrías agregar lógica para otros tabs si quieres.
+      },
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Explorar'),
-        BottomNavigationBarItem(icon: Icon(Icons.local_offer), label: 'Ofertas'),
-        BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Guardados'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Cuenta'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),  // Cambiado a ícono Home
+          label: 'Home',           // Cambiado el texto
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.local_offer),
+          label: 'Ofertas',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite),
+          label: 'Guardados',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Cuenta',
+        ),
       ],
     );
   }
 }
+
 
 // =============================================================================
 //                                VISTA 01
@@ -745,7 +766,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    const double stripeHeight = 250.0; // altura de la franja naranja
+    const double stripeHeight = 230.0; // altura de la franja naranja
     final sel = widget.details[widget.selIndex];
     final complement = (sel['imagen_producto_complement'] as List).cast<String>();
     final total = sel['costo_total'] as int;
@@ -804,7 +825,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         Expanded(
                           child: Text(sel['marketplace'] as String,
                               style: const TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.bold)),
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -823,7 +844,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       const SizedBox(height: 12),
 
                       // Descripción
-                      Text(sel['producto'] as String, style: const TextStyle(fontSize: 16)),
+                      Text(sel['producto'] as String, style: const TextStyle(fontSize: 14)),
                       const SizedBox(height: 16),
 
                       // Carrusel
@@ -869,7 +890,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         child: Text(
                           'Total: CLP ${NumberFormat("#,###", "es").format(total)}',
                           style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -893,7 +914,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     children: [
                       const Text('Ir a comprar',
                           style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold)),
+                              fontSize: 20, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 4),
                       Text(subtitle,
                           style: const TextStyle(
@@ -956,7 +977,7 @@ Column(
                   // Fila 3: Fechas
                   Text(
                     'Envío $st2 - $en2',
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 14),
                   ),
                 ],
               ),
@@ -1061,17 +1082,17 @@ const SizedBox(height: 32),
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 16.0, left: 8.0),
+                  padding: const EdgeInsets.only(top: 6.0, left: 8.0),
                   child: IconButton(
-                    iconSize: 36,
+                    iconSize: 24,
                     icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 16.0, right: 8.0),
+                  padding: const EdgeInsets.only(top: 6.0, right: 8.0),
                   child: IconButton(
-                    iconSize: 28,
+                    iconSize: 24,
                     icon: Icon(
                       _favorite ? Icons.favorite : Icons.favorite_border,
                       color: Colors.white,
