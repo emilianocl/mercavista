@@ -73,82 +73,66 @@ class AppBottomNavBar extends StatelessWidget {
 class LandingPage extends StatelessWidget {
   const LandingPage({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFEAEDF2),
-      body: SafeArea(               
-        child: Column(
-          children: [
-            _buildSearchBar(context),
-            const SizedBox(height: 16),
-            const _SlideshowCarousel(),
-            const SizedBox(height: 16),
-            _buildMiniCategoryRow(context),
-          ],
-        ),
-      ),
-      bottomNavigationBar: const AppBottomNavBar(currentIndex: 0),
-    );
-  }
-
-Widget _buildSearchBar(BuildContext ctx) {
-  final double topPadding = MediaQuery.of(ctx).padding.top;
-  return Container(
-    color: const Color(0xFF002744),
-    padding: EdgeInsets.only(
-      top: topPadding,
-      left: 16,
-      right: 16,
-      bottom: 8,
-    ),
-    child: Row(
+ Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: const Color(0xFFEAEDF2),
+    body: Column(
       children: [
-        // No hay flecha aquí
-        Expanded(
-          child: Container(
-            height: 44,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              children: [
-                const Icon(Icons.search, color: Colors.grey, size: 26),
-                const SizedBox(width: 4),
-                Expanded(
-                  child: TextField(
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                    ),
-                    onSubmitted: (txt) =>
-                        Navigator.pushNamed(ctx, '/list', arguments: txt),
-                    decoration: const InputDecoration(
-                      hintText: 'Buscar producto',
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(fontSize: 18),
-                      isDense: true,
-                      contentPadding: EdgeInsets.symmetric(vertical: 8),
-                    ),
-                  ),
-                ),
-                // Micrófono dentro de la barra
-                IconButton(
-                  icon: const Icon(Icons.mic, color: Colors.grey, size: 24),
-                  onPressed: () {},
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                ),
-              ],
-            ),
+        // FONDO AZUL/MORADO HASTA ARRIBA
+        Container(
+          color: const Color(0xFF002744),  // o 0xFF002844 si prefieres tu azul anterior
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top, // Espacio para status bar
           ),
+          child: _buildSearchBar(context),
         ),
+        const SizedBox(height: 16),
+        const _SlideshowCarousel(),
+        const SizedBox(height: 16),
+        _buildMiniCategoryRow(context),
       ],
     ),
+    bottomNavigationBar: const AppBottomNavBar(currentIndex: 0),
   );
 }
 
+
+Widget _buildSearchBar(BuildContext ctx) => Container(
+  color: const Color(0xFF002844),
+  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+  child: Container(
+    height: 50,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(8),
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 12),
+    child: Row(
+      children: [
+        const Icon(Icons.search, color: Colors.grey, size: 28),
+        const SizedBox(width: 8),
+        Expanded(
+          child: TextField(
+            style: const TextStyle(
+              fontSize: 18,
+              color: Colors.black,
+            ),
+            onSubmitted: (txt) => Navigator.pushNamed(ctx, '/list', arguments: txt),
+            decoration: const InputDecoration(
+              hintText: 'Buscar producto',
+              hintStyle: TextStyle(fontSize: 18),
+              border: InputBorder.none,
+            ),
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.mic, color: Colors.grey),
+          onPressed: () {},
+        ),
+      ],
+    ),
+  ),
+);
 
   Widget _buildMiniCategoryRow(BuildContext context) {
     final miniPcImg = productDatabase
@@ -307,40 +291,49 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final all = productDatabase;
-    final filtered = widget.filter == null
-        ? all
-        : all.where((p) {
-            final sub = (p['subcategoria'] as String).toLowerCase();
-            final prod = (p['producto'] as String).toLowerCase();
-            final f = widget.filter!.toLowerCase();
-            return sub.contains(f) || prod.contains(f);
-          }).toList();
+Widget build(BuildContext context) {
+  final all = productDatabase;
+  final filtered = widget.filter == null
+      ? all
+      : all.where((p) {
+          final sub = (p['subcategoria'] as String).toLowerCase();
+          final prod = (p['producto'] as String).toLowerCase();
+          final f = widget.filter!.toLowerCase();
+          return sub.contains(f) || prod.contains(f);
+        }).toList();
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFEAEDF2),
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            _buildSearchBar(context),
-          //  _buildAddressBar(),
-          _buildInfoBar(context, widget.filter ?? "", filtered.length, "Chile"),
-            _buildModeSelector(),
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.only(bottom: 80),
-                itemCount: filtered.length,
-                itemBuilder: (_, idx) => _buildProductCard(idx, filtered),
-              ),
-            ),
-          ],
+  return Scaffold(
+    backgroundColor: const Color(0xFFEAEDF2),
+    body: Column(
+      children: [
+        // Envolver ambas barras en Container con color y padding top para status bar
+        Container(
+          color: const Color(0xFF002744),
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top, // Espacio para status bar
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSearchBar(context),         // ¡Con flecha!
+              _buildInfoBar(context, widget.filter ?? "", filtered.length, "Chile"),
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: const AppBottomNavBar(currentIndex: 0),
-    );
-  }
+        _buildModeSelector(),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.only(bottom: 80),
+            itemCount: filtered.length,
+            itemBuilder: (_, idx) => _buildProductCard(idx, filtered),
+          ),
+        ),
+      ],
+    ),
+    bottomNavigationBar: const AppBottomNavBar(currentIndex: 0),
+  );
+}
+
 
   // Barra de búsqueda CON FLECHA
   Widget _buildSearchBar(BuildContext ctx) => Container(
