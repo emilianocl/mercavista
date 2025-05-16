@@ -766,7 +766,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    const double stripeHeight = 230.0; // altura de la franja naranja
+    const double stripeHeight = 200.0; // altura de la franja naranja
     final sel = widget.details[widget.selIndex];
     final complement = (sel['imagen_producto_complement'] as List).cast<String>();
     final total = sel['costo_total'] as int;
@@ -1006,7 +1006,7 @@ Column(
                     overflow: TextOverflow.ellipsis,
                     text: TextSpan(
                       style: const TextStyle(
-                        fontSize: 10,          // tamaño para “Con envío ”
+                        fontSize: 11,          // tamaño para “Con envío ”
                         color: Colors.black54,
                       ),
                       children: [
