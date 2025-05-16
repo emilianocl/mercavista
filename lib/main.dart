@@ -968,7 +968,7 @@ Column(
                       const SizedBox(width: 4),
                       Text(
                         '$stars ($reviews)',
-                        style: const TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 12),
                       ),
                     ],
                   ),
@@ -994,7 +994,7 @@ Column(
                   Text(
                     'CLP ${NumberFormat("#,###", "es").format(price)}',
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -1006,7 +1006,7 @@ Column(
                     overflow: TextOverflow.ellipsis,
                     text: TextSpan(
                       style: const TextStyle(
-                        fontSize: 12,          // tamaño para “Con envío ”
+                        fontSize: 10,          // tamaño para “Con envío ”
                         color: Colors.black54,
                       ),
                       children: [
